@@ -11,7 +11,7 @@
 
 
 
-<a class="btn btn-success" href="/kullaniciyonetim/ekleduzenle">Yeni Ekle</a>
+<a class="btn btn-success" href="/kullaniciyonetim/ekleduzenle/0">Yeni Ekle</a>
 
 
 <div class="row">
@@ -23,7 +23,7 @@
            @foreach (var kullanici in Model)
             {
                 <tr>
-                    <td></td>
+                    <td><a class="btn btn-primary" href="/kullaniciyonetim/ekleduzenle/@kullanici.Id">Güncelle</a></td>
                     <td>@kullanici.Eposta</td>
                     <td>@kullanici.Ad</td>
                     <td>@kullanici.Soyad</td>

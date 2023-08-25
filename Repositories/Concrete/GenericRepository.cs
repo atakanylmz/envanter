@@ -41,6 +41,12 @@ namespace codefirst_deneme.Repositories.Concrete
             
         }
 
+        public async Task TopluEkle(List<TEntity> entities)
+        {
+            _dbSet.AddRange (entities);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<TEntity>> TumunuGetir()
         {
             return await _dbSet.ToListAsync();

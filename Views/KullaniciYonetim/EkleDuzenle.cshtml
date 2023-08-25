@@ -9,16 +9,25 @@
     <input asp-for="Id" type="hidden"/>
     <div class="col-auto">
         <label asp-for="Eposta" >Eposta</label>
-        <input type="text"  class="form-control-plaintext" asp-for="Eposta">
+        <input type="text"  class="form-control" asp-for="Eposta">
     </div>
     <div class="col-auto">
         <label asp-for="Ad">Ad</label>
-        <input type="text"  class="form-control-plaintext" asp-for="Ad">
+        <input type="text"  class="form-control" asp-for="Ad">
     </div>
     <div class="col-auto">
         <label asp-for="Soyad">Soyad</label>
-        <input type="text"  class="form-control-plaintext" asp-for="Soyad">
+        <input type="text"  class="form-control" asp-for="Soyad">
     </div>
+
+    @for (int i = 0; i < Model.TumRoller.Count; i++)
+    {
+         <div class="col-auto">
+            <label>@Model.TumRoller[i].Ad</label>
+            <input name="RolIdler_chk" type="checkbox" value="@Model.TumRoller[i].Id" @(Model.RolIdler_chk.Contains(Model.TumRoller[i].Id)?"Checked":"") />
+        </div>
+    }
+@*
     <div class="col-auto">
         <label asp-for="RolA_chk">Rol A</label>
         <input asp-for="RolA_chk" type="checkbox" />
@@ -26,7 +35,7 @@
     <div class="col-auto">
         <label asp-for="RolB_chk">Rol B</label>
         <input asp-for="RolB_chk" type="checkbox" />
-    </div> 
+    </div> *@
     @if (ViewBag.mesaj != null)
     {
         <br />

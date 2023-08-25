@@ -1,4 +1,5 @@
 ﻿using codefirst_deneme.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace codefirst_deneme.ViewModels
 {
@@ -6,16 +7,16 @@ namespace codefirst_deneme.ViewModels
     {
         public KullaniciEkleDuzenleViewModel()
         {
-            Roller = new List<Rol>();
+            TumRoller = new List<Rol>();
+            RolIdler_chk = new List<int>();
         }
         public int Id { get; set; }
         public string Eposta { get; set; }
         public string Ad { get; set; }
         public string Soyad { get; set; }
-        public int RolId { get; set; }
-        public List<Rol> Roller { get; set; }
+        public List<Rol> TumRoller { get; set; }
 
-        public bool RolA_chk { get; set; }
-        public bool RolB_chk { get; set; }
+        [BindProperty]
+        public List<int> RolIdler_chk { get; set; }
     }
 }

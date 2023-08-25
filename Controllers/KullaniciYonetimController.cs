@@ -29,6 +29,7 @@ namespace codefirst_deneme.Controllers
             var kullanicilar = await _kullaniciRepository.TumunuGetirInclude();
             List<KullaniciListeViewModel> kullanicilarListesi = kullanicilar.Select(k => new KullaniciListeViewModel()
             {
+                Id= k.Id,
                 Eposta = k.Eposta,
                 Ad = k.Ad,
                 Soyad = k.Soyad,
@@ -38,11 +39,33 @@ namespace codefirst_deneme.Controllers
             return View(kullanicilarListesi);
         }
 
-        public async Task<IActionResult> EkleDuzenle()
+        public async Task<IActionResult> EkleDuzenle(int id)
         {
+            KullaniciEkleDuzenleViewModel kullaniciEkleDuzenleViewModel;
+            if (id == 0)
+            {
+                kullaniciEkleDuzenleViewModel = new KullaniciEkleDuzenleViewModel();
+            }
+            else
+            {
+                Kullanici? kullanici = await _kullaniciRepository.GetirInclude(id);
+                if(kullanici == null)
+                {
+                    //hata mesajı verilebilir
+                    RedirectToAction("Index");
+                }
+                kullaniciEkleDuzenleViewModel = new KullaniciEkleDuzenleViewModel
+                {
+                    Ad = kullanici.Ad,
+                    Eposta = kullanici.Eposta,
+                    Id = id,
+                    Soyad = kullanici.Soyad,
+                    RolIdler_chk=kullanici.KullaniciRols.Select(x=>x.RolId).ToList(),
+                };
 
-            KullaniciEkleDuzenleViewModel kullaniciEkleDuzenleViewModel = new KullaniciEkleDuzenleViewModel();
-            kullaniciEkleDuzenleViewModel.Roller = await _rolRepository.TumunuGetir();
+            }
+            
+            kullaniciEkleDuzenleViewModel.TumRoller = await _rolRepository.TumunuGetir();
 
             return View(kullaniciEkleDuzenleViewModel);
         }
@@ -52,7 +75,7 @@ namespace codefirst_deneme.Controllers
         [HttpPost]
         public async Task<IActionResult> EkleDuzenle(KullaniciEkleDuzenleViewModel kullaniciEkleDuzenleViewModel)
         {
-            kullaniciEkleDuzenleViewModel.Roller = await _rolRepository.TumunuGetir();
+            kullaniciEkleDuzenleViewModel.TumRoller = await _rolRepository.TumunuGetir();
 
 
             try
@@ -79,14 +102,14 @@ namespace codefirst_deneme.Controllers
                                 EklemeTarihi = DateTime.Now,
                             });
 
-                            if (kullaniciEkleDuzenleViewModel.RolA_chk)
+                            List<KullaniciRol> kullaniciRoller= new List<KullaniciRol>();
+                            DateTime eklemeTarih = DateTime.Now;
+                            foreach (var rolId in kullaniciEkleDuzenleViewModel.RolIdler_chk)
                             {
-                                await _kullaniciRolRepository.Ekle(new KullaniciRol { KullaniciId = eklenenKullanici.Id, RolId = 1, EklemeTarihi = DateTime.Now });
+                                kullaniciRoller.Add(new KullaniciRol { KullaniciId = eklenenKullanici.Id, RolId = rolId, EklemeTarihi = eklemeTarih });
                             }
-                            if (kullaniciEkleDuzenleViewModel.RolB_chk)
-                            {
-                                await _kullaniciRolRepository.Ekle(new KullaniciRol { KullaniciId = eklenenKullanici.Id, RolId = 2, EklemeTarihi = DateTime.Now });
-                            }
+                            await _kullaniciRolRepository.TopluEkle(kullaniciRoller);
+
                             scope.Complete();
 
                           return  RedirectToAction("Index");
@@ -106,13 +129,22 @@ namespace codefirst_deneme.Controllers
                                 mevcutKullanici.Ad = kullaniciEkleDuzenleViewModel.Ad;
                                 mevcutKullanici.Soyad = kullaniciEkleDuzenleViewModel.Soyad;
                                 mevcutKullanici.Eposta = kullaniciEkleDuzenleViewModel.Eposta;
+
+                                List<KullaniciRol> kullaniciRoller = new List<KullaniciRol>();
+                                DateTime eklemeTarih = DateTime.Now;
+                                foreach (var rolId in kullaniciEkleDuzenleViewModel.RolIdler_chk)
+                                {
+                                    kullaniciRoller.Add(new KullaniciRol { KullaniciId = mevcutKullanici.Id, RolId = rolId, EklemeTarihi = eklemeTarih });
+                                }
+                                mevcutKullanici.KullaniciRols = kullaniciRoller;
+
                                 await _kullaniciRepository.Guncelle(mevcutKullanici);
 
                                 //rolleri de kontrol edeceğiz 
                                 //şimdilik yapılmadı
-                           
 
 
+                                scope.Complete();
                             }
 
 
@@ -137,7 +169,7 @@ namespace codefirst_deneme.Controllers
             }
 
 
-            return View(kullaniciEkleDuzenleViewModel);
+            return RedirectToAction("Index");
         }
     }
 }

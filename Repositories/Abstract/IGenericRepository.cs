@@ -7,5 +7,7 @@
         Task Sil(int id);
         Task Guncelle(TEntity entity);    
         Task<TEntity> Ekle(TEntity entity);
+
+        Task TopluEkle(List<TEntity> entities);
     }
 }

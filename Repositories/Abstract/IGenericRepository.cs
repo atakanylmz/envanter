@@ -3,9 +3,9 @@
     public interface IGenericRepository<TEntity> where TEntity : class
     {
         Task<TEntity?> Getir(int id);
-        IEnumerable<TEntity> TumunuGetir();
-        void Sil(int id);
-        void Guncelle(TEntity entity);    
-        void Ekle(TEntity entity);
+        Task<List<TEntity>> TumunuGetir();
+        Task Sil(int id);
+        Task Guncelle(TEntity entity);    
+        Task<TEntity> Ekle(TEntity entity);
     }
 }

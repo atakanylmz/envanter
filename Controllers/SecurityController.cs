@@ -13,7 +13,7 @@ namespace codefirst_deneme.Controllers
 {
     public class SecurityController : Controller
     {
-        IKullaniciRepository _kullaniciRepository;
+        private readonly IKullaniciRepository _kullaniciRepository;
         public SecurityController(IKullaniciRepository kullaniciRepository)
         {
             _kullaniciRepository = kullaniciRepository;
@@ -28,12 +28,6 @@ namespace codefirst_deneme.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login","Security");
-        }
-            
             [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -69,5 +63,15 @@ namespace codefirst_deneme.Controllers
 
             return RedirectToAction("Index","Home");
         }
+
+
+
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Security");
+        }
+
     }
 }

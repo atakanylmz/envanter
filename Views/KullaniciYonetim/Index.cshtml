@@ -1,0 +1,36 @@
+﻿@using codefirst_deneme.ViewModels;
+@model List<KullaniciListeViewModel>;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+   
+
+}
+
+
+
+
+<a class="btn btn-success" href="/kullaniciyonetim/ekleduzenle">Yeni Ekle</a>
+
+
+<div class="row">
+    <table class="table table-striped">
+       <thead>
+           <tr><th>İşlem</th><th>Kullanıcı Adı</th><th>Ad</th><th>Soyad</th><th>Roller</th></tr>
+       </thead>
+       <tbody>
+           @foreach (var kullanici in Model)
+            {
+                <tr>
+                    <td></td>
+                    <td>@kullanici.Eposta</td>
+                    <td>@kullanici.Ad</td>
+                    <td>@kullanici.Soyad</td>
+                    <td>@kullanici.Roller</td>
+                </tr>
+      
+            }
+       </tbody>
+    </table>
+</div>

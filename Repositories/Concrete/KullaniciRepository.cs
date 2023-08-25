@@ -7,28 +7,26 @@ namespace codefirst_deneme.Repositories.Concrete
 {
     public class KullaniciRepository : GenericRepository<Kullanici>, IKullaniciRepository
     {
-        private Context _context;
-        private DbSet<Kullanici> _dbSet;
+        private readonly Context _context;
+        private readonly DbSet<Kullanici> _dbSet;
         public KullaniciRepository(Context context) : base(context)
         {
             _context = context;
             _dbSet=_context.Kullanicis;
         }
 
-        public Task<Kullanici?> EpostaylaGetirInclude(string eposta)
+        public async Task<Kullanici?> EpostaylaGetirInclude(string eposta)
         {
-            return _dbSet.Include(k => k.KullaniciRols).ThenInclude(kr => kr.Rol).Where(k => k.Eposta == eposta).FirstOrDefaultAsync();
+            return  await _dbSet.Include(k => k.KullaniciRols).ThenInclude(kr => kr.Rol).Where(k => k.Eposta == eposta).FirstOrDefaultAsync();
         }
 
-
-
-
-
-
-
-
-
-
-
+        public async Task<List<Kullanici>> TumunuGetirInclude()
+        {
+            return await _dbSet.Include(k => k.KullaniciRols).ThenInclude(kr => kr.Rol).ToListAsync();
+        }
+        public async Task<Kullanici?> GetirInclude(int id)
+        {
+            return await _dbSet.Include(k => k.KullaniciRols).ThenInclude(kr => kr.Rol).Where(k => k.Id == id).FirstOrDefaultAsync();
+        }
     }
 }

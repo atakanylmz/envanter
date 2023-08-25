@@ -3,10 +3,10 @@
     public class KullaniciRol
     {
         public int KullaniciId { get; set; }
-        public required Kullanici Kullanici { get; set; }
+        public  Kullanici Kullanici { get; set; }
 
         public int RolId { get; set; }
-        public required Rol Rol { get; set; }
+        public  Rol Rol { get; set; }
         public DateTime EklemeTarihi { get; set; }
 
     }

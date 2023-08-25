@@ -13,10 +13,11 @@ namespace codefirst_deneme.Repositories.Concrete
                _context=context;
                _dbSet = _context.Set<TEntity>();
         }
-        public void Ekle(TEntity entity)
+        public async Task<TEntity> Ekle(TEntity entity)
         {
-            _dbSet.Add(entity);
-            _context.SaveChanges();
+             _dbSet.Add(entity);
+             await  _context.SaveChangesAsync();
+            return entity;
         }
 
         public async Task<TEntity?> Getir(int id)
@@ -24,25 +25,25 @@ namespace codefirst_deneme.Repositories.Concrete
             return await _dbSet.FindAsync(id);
         }
 
-        public void Guncelle(TEntity entity)
+        public async Task Guncelle(TEntity entity)
         {
             _dbSet.Update(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public async void Sil(int id)
+        public async Task Sil(int id)
         {
             var entity =await Getir(id);
             if(entity != null) {
                 _dbSet.Remove(entity);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             
         }
 
-        public IEnumerable<TEntity> TumunuGetir()
+        public async Task<List<TEntity>> TumunuGetir()
         {
-            return _dbSet;
+            return await _dbSet.ToListAsync();
         }
     }
 }

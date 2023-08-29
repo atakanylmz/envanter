@@ -37,7 +37,7 @@ namespace codefirst_deneme.Repositories.Abstract.EfCore
             modelBuilder.ApplyConfiguration(new RolKonfigurasyon());
             modelBuilder.ApplyConfiguration(new EnvanterKonfigurasyon());
             modelBuilder.ApplyConfiguration(new KullaniciRolKonfigurasyon());
-
+            modelBuilder.ApplyConfiguration(new DonanimMarkaKonfigurasyon());
         }
 
 
@@ -48,6 +48,8 @@ namespace codefirst_deneme.Repositories.Abstract.EfCore
         public DbSet<Envanter> Envanters { get; set; }
 
         public DbSet<KullaniciRol> KullaniciRols { get; set; }
+
+        public DbSet<DonanimMarka> DonanimMarkas { get; set; }
 
 
     }

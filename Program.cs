@@ -11,7 +11,7 @@ builder.Services.AddDbContext<Context>(options => options.UseSqlServer(builder.C
 builder.Services.AddTransient<IKullaniciRepository, KullaniciRepository>();
 builder.Services.AddTransient<IKullaniciRolRepository, KullaniciRolRepository>();
 builder.Services.AddTransient<IRolRepository, RolRepository>();
-
+builder.Services.AddTransient<IDonanimMarkaRepository, DonanimMarkaRepository>();
 
 
 // Add services to the container.

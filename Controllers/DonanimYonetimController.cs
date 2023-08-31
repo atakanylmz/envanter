@@ -4,6 +4,7 @@ using codefirst_deneme.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace codefirst_deneme.Controllers
 {
@@ -20,6 +21,10 @@ namespace codefirst_deneme.Controllers
 
         public async Task<IActionResult> MarkaListe()
         {
+            //kullanıcı bilgisi lazım olursa kullanılabilecek kodlar
+            //var userIdClaim = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+            //string userId=userIdClaim!=null? userIdClaim.Value : "";
+            //var Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var markalar = await _markaRepository.TumunuGetir();
             List<DonanimMarkaListeViewModel> markaListeViewModels = markalar.Select(x => new DonanimMarkaListeViewModel()
             {

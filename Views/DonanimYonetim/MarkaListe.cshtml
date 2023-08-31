@@ -5,44 +5,46 @@
 *@
 
 
-
-
-<div class="row">
-    <div class="col-3">
-        <a class="btn btn-success" href="#" id="yeniMarka_btn">Yeni Ekle</a>
-        <a style="display: none;" class="btn btn-success" href="#" id="vazgecMarka_btn">Vazgeç </a>
-        <a style="display: none;" class="btn btn-success" href="#" id="kaydetMarka_btn">Kaydet</a>
-    </div>
-
-@*    <div class="col-9"></div>
-*@    <div class="form-outline col-3">
-        <label class="form-label" >Ad</label>
+<div style="max-width:60%; margin-left: 20vw" ;>
+    <div class="card"> 
+        <div>
+    <div class="form-outline col-6">
+        <label class="form-label">Ad</label>
         <input type="text" name="Ad" id="ad" class="form-control" />
-        <input type="hidden" name="Id" id ="id" value="0"/>
+        <label id="mesaj"></label>
+        <input type="hidden" name="Id" id="id" value="0" />
+        <input type="hidden" name="guncelleSatirIndeks" id="guncelleSatirIndeks" value="0" />
     </div>
 
-    <div class="col-3"></div>
-</div>
-<br />
-<br />
-<br />
-<br />
-<div class="row">
-    <table class="table table-striped" id="donanimMarkaTablo">
-        <thead>
-            <tr><th>İşlem</th><th>Marka Adı</th>
-        </thead>
-        <tbody>
-            @foreach (var marka in Model)
-            {
-                <tr>
-                    <td>
-                        <a class="btn btn-primary markaGuncelle" data-id="@marka.Id" data-ad="@marka.Ad">Güncelle</a>
-                    </td>
-                    <td>@marka.Ad</td>
+    <a class="btn btn-success" href="#" id="yeniMarka_btn">Yeni Ekle</a>
+    <a style="display: none;" class="btn btn-success" href="#" id="vazgecMarka_btn">Vazgeç </a>
+    <a style="display: none;" class="btn btn-success" href="#" id="kaydetMarka_btn">Kaydet</a>
 
-                </tr>
-            }
-        </tbody>
-    </table>
+        </div>
+
+
+    </div>
+
+    <br />
+    <br />
+    <div class="row">
+        <table class="table table-striped" id="donanimMarkaTablo">
+            <thead>
+                <tr><th>İşlem</th><th>Marka Adı</th>
+            </thead>
+            <tbody>
+                @foreach (var marka in Model)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-primary markaGuncelle" data-id="@marka.Id" data-ad="@marka.Ad">Güncelle</a>
+                        </td>
+                        <td>@marka.Ad</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
 </div>

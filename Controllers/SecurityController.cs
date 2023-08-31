@@ -45,7 +45,8 @@ namespace codefirst_deneme.Controllers
 
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email,kullanici.Eposta)
+                new Claim(ClaimTypes.Email,kullanici.Eposta),
+                new Claim(ClaimTypes.NameIdentifier,kullanici.Id.ToString())
             };
             foreach (var kr in kullanici.KullaniciRols)
             {
